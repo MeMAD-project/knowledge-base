@@ -1,0 +1,34 @@
+[data]
+name = memad-kg
+description = MeMAD knowledge graph (INA broadcast archive and Yle programmes in EBUCore, plus the MeMAD ontology)
+
+[index]
+INPUT_FILES =
+MULTI_INPUT_JSON = [
+  { "cmd": "cat \"{}\"", "format": "ttl", "graph": "http://data.memad.eu/graph/ina-ld", "for-each": "../source/dumps/ina-ld/*.ttl" },
+  { "cmd": "cat \"{}\"", "format": "nt", "graph": "http://data.memad.eu/ontology", "for-each": "../source/ontology/*.nt" },
+  { "cmd": "cat \"{}\"", "format": "ttl", "graph": "http://data.memad.eu/ontology", "for-each": "../source/ontology/*.ttl" }]
+STXXL_MEMORY = 2G
+VOCABULARY_TYPE = on-disk-compressed
+TEXT_INDEX = from_literals
+ADD_HAS_WORD_TRIPLES = true
+
+[server]
+HOST_NAME = 0.0.0.0
+PORT = 7019
+MEMORY_FOR_QUERIES = 4G
+CACHE_MAX_SIZE = 1G
+TIMEOUT = 120s
+
+[runtime]
+SYSTEM = native
+# ina-pa subtitles, 4/2020 drop, 3,678,220 triples total; never loaded in Virtuoso
+# { "cmd": "cat \"{}\"", "format": "ttl", "graph": "http://data.memad.eu/graph/ina-pa", "for-each": "../source/dumps/ina-pa/*.ttl" },
+# yle programmes, 4/2020 drop, 466,796 triples; never loaded in Virtuoso
+# { "cmd": "cat \"{}\"", "format": "ttl", "graph": "http://data.memad.eu/graph/yle", "for-each": "../source/dumps/yle/*.ttl" },
+# the 5/2021 top-level drop: an updated ld_sujets.ttl (+18,486 vs 2020, about
+# 19,824 net-new triples in the union) and refreshed yle files. The 2021 ld.ttl
+# reload failed in Virtuoso with a syntax error and the update never landed, so
+# treat these as updates to reconcile, not as additive data:
+# { "cmd": "cat \"{}\"", "format": "ttl", "graph": "http://data.memad.eu/graph/ina-ld", "for-each": "../source/dumps/ld_sujets.ttl" },
+# { "cmd": "cat \"{}\"", "format": "ttl", "graph": "http://data.memad.eu/graph/yle", "for-each": "../source/dumps/yle_*.ttl" },
