@@ -62,7 +62,7 @@ docker compose logs -f qlever-index
 
 The `qlever-index` service builds the index into a staging directory, then swaps it into place, so the running engine is never served a partial index. `docker compose ps` shows the stack ready once `qlever` and `workbench` report healthy and `qlever-index` has exited with code 0.
 
-The SPARQL endpoint answers on `http://localhost:8851` and the workbench console on `http://localhost:3024` (admin on `http://localhost:3023`).
+The SPARQL endpoint answers on `http://localhost:8851` and the workbench console on `http://localhost:3024`.
 
 ### Data refresh
 

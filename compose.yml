@@ -116,8 +116,7 @@ services:
     volumes:
       - workbench-data:/data
     ports:
-      - "127.0.0.1:${WORKBENCH_ADMIN_PORT:-3023}:3000"
-      - "${WORKBENCH_BIND_ADDRESS-127.0.0.1}:${WORKBENCH_PUBLIC_PORT:-3024}:3000"
+      - "${WORKBENCH_PORT:-3024}:3000"
     restart: unless-stopped
     healthcheck:
       test:
